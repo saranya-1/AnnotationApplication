@@ -36,7 +36,7 @@
                         <br />
                     </div>   
                 </td>
-                <td class="auto-style2" valign="top" style="border: 1px solid black">
+                <td class="auto-style2" valign="top"  style="border: 1px solid black">
 
                     <strong>
 
