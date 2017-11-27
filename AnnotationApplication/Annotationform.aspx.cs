@@ -23,7 +23,7 @@ namespace AnnotationApplication
                 Dictionary<String, List<String>> groupMap = new Dictionary<String, List<String>>();
                 Session["groupMap"] = groupMap;
                 //to load the video using samping algorithm
-                string[] files = Directory.GetFiles(@"C:\Users\T450s\Documents\Visual Studio 2015\Projects\Hitt3\Hitt3\Videos", "*.mp4");
+                string[] files = Directory.GetFiles(@"C:\Users\13067_000\Documents\Visual Studio 2015\Projects\AnnotationApplication\AnnotationApplication\Videos", "*.mp4");
                 Random rand = new Random();
                 int i = rand.Next(0, files.Length - 1);
                 String s = files[i];
@@ -45,8 +45,6 @@ namespace AnnotationApplication
             String currenttime = curTime;
             AnnotationDBEntities entities = new AnnotationDBEntities();
             var frame = entities.VideoDetails.Where(v => v.Video.video_Name.Contains("vid_001")).Select(v => v.frame_Vid_ID).Distinct().Count();
-
-
             int totTime = (int)Convert.ToDouble(totallength);
 
             int frameRate = Convert.ToInt32(frame) / totTime;
@@ -81,8 +79,7 @@ namespace AnnotationApplication
             AnnotationDBEntities entities = new AnnotationDBEntities();
 
             var frame = entities.VideoDetails.Where(v => v.Video.video_Name.Contains(videoName)).Select(v => v.frame_Vid_ID).Distinct().Count();
-
-
+            
             int totTime = (int)Convert.ToDouble(totallength);
 
             int frameRate = Convert.ToInt32(frame) / totTime;
@@ -95,38 +92,63 @@ namespace AnnotationApplication
 
             var boxList = boxValues.Select(x => "Person " + x).ToList();
             boxList.Insert(0, "Please Select");
+            boxList.Insert(1, "Create Group");
+            dropDownBox1.DataSource = boxList;
+            dropDownBox1.DataBind();
 
-            //dropDownBox1.DataSource = boxList;
-            //dropDownBox1.DataBind();
-
-            //dropDownBox2.DataSource = boxList;
-            //dropDownBox2.DataBind();
+            dropDownBox2.DataSource = boxList;
+            dropDownBox2.DataBind();
 
             //ListBox1.DataSource = boxList;
             //ListBox1.DataBind();
 
-            TextBox1.Text = "";
-            TextBox2.Text = "";
+            //TextBox1.Text = "";
+            //TextBox2.Text = "";
 
             //  dropDownBox1.Focus();
 
         }
 
-        //protected void dropDownBox1_SelectedIndexChanged(object sender, EventArgs e)
-        //{
+        protected void dropDownBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Dictionary<String, List<String>> groupMap = (Dictionary<String, List<String>>)Session["groupMap"];
+            String box1SelectedValue = dropDownBox1.SelectedValue;
+            ListItemCollection items = new ListItemCollection();
+            items = dropDownBox1.Items;
+            dropDownBox2.DataSource = items;
+            dropDownBox2.DataBind();
+            dropDownBox2.Items.Remove(box1SelectedValue);
+            if (box1SelectedValue == "Create Group")
+            {
+                createGroupPanel.Visible = true;
+            }
+            else if (groupMap.ContainsKey(box1SelectedValue))
+            {
+                createGroupPanel.Visible = true;
+                txtGroupName.Text = box1SelectedValue;
+                List<String> persons = (List<String>)groupMap.Where(x => x.Key == box1SelectedValue).Select(x => x.Value).First();
+                List<ListItem> groupElements = new List<ListItem>();
+                foreach (String li in persons)
+                {
+                    if (!li.Equals(""))
+                    {
+                        ListItem listItem = new ListItem();
+                        listItem.Value = li;
+                        groupElements.Add(listItem);
 
-        //    String box1SelectedValue = dropDownBox1.SelectedValue;
-        //    ListItemCollection items = new ListItemCollection();
-        //    items = dropDownBox1.Items;
-        //    dropDownBox2.DataSource = items;
-        //    dropDownBox2.DataBind();
-        //    dropDownBox2.Items.Remove(box1SelectedValue);
-        //    //if (box1SelectedValue.Contains("group"))
-        //    //{
-        //    //    txtGroupName.Text = box1SelectedValue;
 
-        //    //}
-        //}
+                    }
+                }
+                ListBox1.DataSource = persons;
+                ListBox1.DataBind();
+                addgroupPanel.Visible = false;
+                groupButtonPanel.Visible = true;
+            }
+            else
+            {
+                createGroupPanel.Visible = false;
+            }
+        }
 
         protected void btnAdd_Click(object sender, EventArgs e)
         {
@@ -192,8 +214,8 @@ namespace AnnotationApplication
 
             }
 
-            String value1 = TextBox1.Text; //dropDownBox1.SelectedValue; 
-            String value2 = TextBox2.Text; //dropDownBox2.SelectedValue;
+            String value1 =  dropDownBox1.SelectedValue; //TextBox1.Text;
+            String value2 = dropDownBox2.SelectedValue; //TextBox2.Text;
             AnnotationDetail relation = new AnnotationDetail();
             relation.frame_vid_ID = Convert.ToInt32(Convert.ToDouble(curTimeHiddenField.Value)) * 30;
             relation.person1 = value1;
@@ -271,23 +293,7 @@ namespace AnnotationApplication
 
         protected void btnAddGroup_Click(object sender, EventArgs e)
         {
-            String groupName = txtGroupName.Text;
-
-            // String elements = "";
-            //foreach ( ListItem li in ListBox1.Items)
-            // {
-            //     if (li.Selected == true)
-            //     {
-            //         groupElements.Add(li);
-            //         elements=elements+li.Value+",";
-            //     }
-            // }
-            // AnnotationEntities entity = new AnnotationEntities();
-            // groupDetail gd = new groupDetail();
-            // gd.GroupName = groupName;
-            // gd.Person = elements;
-            // entity.groupDetails.Add(gd);
-            // entity.SaveChanges();
+            String groupName = txtGroupName.Text;          
             List<ListItem> groupElements = new List<ListItem>();
             List<String> groupMembers = new List<String>();
             //getting values from the hidden field for field
@@ -298,7 +304,7 @@ namespace AnnotationApplication
                 if (!li.Equals(""))
                 {
                     if(groupMembers.Contains(li))
-                        ScriptManager.RegisterStartupScript(this, GetType(), "ShowAlert", "alert('Please enter the group name');", true);
+                        ScriptManager.RegisterStartupScript(this, GetType(), "ShowAlert", "alert('item already exists');", true);
                     else
                     {
                         groupMembers.Add(li);
@@ -327,27 +333,33 @@ namespace AnnotationApplication
                 {
                     groupMap.Add(groupName, groupMembers);
                     Session["groupMap"] = groupMap;
-                }
-                if (groupDownDown.Items.Count == 0)
-                    groupDownDown.Items.Add("Please Select");
+                    //adding group name to dropdowns
+                    dropDownBox1.Items.Add(groupName);
+                    dropDownBox2.Items.Add(groupName);
+                    //removing items from dropdown
 
-                groupDownDown.Items.Add(groupName);
+                }
+                //if (groupDownDown.Items.Count == 0)
+                //    groupDownDown.Items.Add("Please Select");
+
+                //groupDownDown.Items.Add(groupName);
+               
                 txtGroupName.Text = "";
                 grpMemHiddenField.Value = "";
                
             }
             grpMemHiddenField.Value = "";
-            //foreach (ListItem li in groupElements)
-            //{
-            //    dropDownBox1.Items.Remove(li);
-            //}
+            foreach (ListItem li in groupElements)
+            {
+                dropDownBox1.Items.Remove(li);
+            }
             //dropDownBox1.Items.Add(groupName);
             //dropDownBox2.Items.Add(groupName);
-            //foreach (ListItem li in groupElements)
-            //{
-            //    dropDownBox2.Items.Remove(li);
-            //}
-
+            foreach (ListItem li in groupElements)
+            {
+                dropDownBox2.Items.Remove(li);
+            }
+            createGroupPanel.Visible = false;
 
         }
 
@@ -387,17 +399,17 @@ namespace AnnotationApplication
             {
                 lst.Selected = false;
             }
-            TextBox1.Text = "";
-            TextBox2.Text = "";
-           // dropDownBox1.SelectedIndex = 0;
-           // dropDownBox2.SelectedIndex = 0;
+            //TextBox1.Text = "";
+            //TextBox2.Text = "";
+            dropDownBox1.SelectedIndex = 0;
+            dropDownBox2.SelectedIndex = 0;
         }
 
-        //protected void dropDownBox2_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    String box2SelectedValue = dropDownBox2.SelectedValue;
-          
-        //}
+        protected void dropDownBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            String box2SelectedValue = dropDownBox2.SelectedValue;
+
+        }
 
         protected void btnRemoveGroup_Click(object sender, EventArgs e)
         {
@@ -428,9 +440,9 @@ namespace AnnotationApplication
 
                     //    dropDownBox2.Items.Remove(grpName);
                     //    dropDownBox1.Items.Remove(grpName);
-                    groupDownDown.Items.Remove(grpName);
+                    //groupDownDown.Items.Remove(grpName);
                     txtGroupName.Text = "";
-                    ListBox2.Items.Clear();
+                   // ListBox2.Items.Clear();
                 }
             }
             else
@@ -472,19 +484,20 @@ namespace AnnotationApplication
                 }
                 else
                 {
-                    TextBox textbox = (TextBox)this.FindControl(s1[2]);
-                    textbox.Text = value;
-                    //int index = 0;
-                    //foreach (ListItem li in dropdown.Items)
-                    //{
-                    //    if (value.Equals(li.Value))
-                    //    {
+                    //TextBox textbox = (TextBox)this.FindControl(s1[2]);
+                    //textbox.Text = value;
+                    DropDownList dropdown = (DropDownList)this.FindControl(s1[2]);
+                    int index = 0;
+                    foreach (ListItem li in dropdown.Items)
+                    {
+                        if (value.Equals(li.Value))
+                        {
 
-                    //        break;
-                    //    }
-                    //    index++;
-                    //}
-                    //dropdown.SelectedIndex = index;
+                            break;
+                        }
+                        index++;
+                    }
+                    dropdown.SelectedIndex = index;
 
                 }
             }
@@ -504,20 +517,20 @@ namespace AnnotationApplication
 
         }
 
-        protected void groupDownDown_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            String selectedGroup = groupDownDown.SelectedValue;
-            Dictionary<String, List<String>> groupMap = (Dictionary<String, List<String>>)Session["groupMap"];
-            if (groupMap.ContainsKey(selectedGroup))
-            {
-                List<String> persons = groupMap.Where(x => x.Key == selectedGroup).Select(x => x.Value).First();
-                ListBox2.Items.Clear();
-                foreach (String s in persons)
-                {
-                    ListBox2.Items.Add(s);
-                }
-            }
-        }
+        //protected void groupDownDown_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //   // String selectedGroup = groupDownDown.SelectedValue;
+        //    Dictionary<String, List<String>> groupMap = (Dictionary<String, List<String>>)Session["groupMap"];
+        //    if (groupMap.ContainsKey(selectedGroup))
+        //    {
+        //        List<String> persons = groupMap.Where(x => x.Key == selectedGroup).Select(x => x.Value).First();
+        //        ListBox2.Items.Clear();
+        //        foreach (String s in persons)
+        //        {
+        //            ListBox2.Items.Add(s);
+        //        }
+        //    }
+        //}
 
      
     }

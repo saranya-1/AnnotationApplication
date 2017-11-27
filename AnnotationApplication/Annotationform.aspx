@@ -47,13 +47,21 @@
                     <asp:Label ID="Label11" runat="server" Text="STEP 1: Please select the first Person/Group:"></asp:Label>
                     <br />
                     <br />
-                    <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+                    <%--<asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>--%>
+                        <asp:DropDownList ID="dropDownBox1" runat="server" OnSelectedIndexChanged="dropDownBox1_SelectedIndexChanged" AutoPostBack="True">
+                         <asp:ListItem>Please select</asp:ListItem>
+                         <asp:ListItem>Create group</asp:ListItem>
+                    </asp:DropDownList>
                     <br />
                     <br />
                     <asp:Label ID="Label12" runat="server" Text="STEP 2: Please select the second  Person/Group"></asp:Label>
                     <br />
                     <br />
-                    <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+                        <asp:DropDownList ID="dropDownBox2" runat="server" OnSelectedIndexChanged="dropDownBox2_SelectedIndexChanged" AutoPostBack="True">
+                         <asp:ListItem>Please select</asp:ListItem>
+                          <asp:ListItem>Create group</asp:ListItem>
+                        </asp:DropDownList>
+                    <%--<asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>--%>
                     <br />
                     </strong>                  
                     <%--<asp:DropDownList ID="dropDownBox2" runat="server" OnSelectedIndexChanged="dropDownBox2_SelectedIndexChanged">
@@ -64,13 +72,14 @@
                     <br />
                    </td>
             <td class="auto-style1" valign="top" style="border: 1px solid black">
-                <strong>
-                <asp:Label ID="Label13" runat="server" Text="To create a group:"></asp:Label>
+                
+                   <asp:Panel ID="createGroupPanel" runat="server" visible="false" Width="308px">
+                       <asp:Label ID="Label13" runat="server" Text="To create a group:" style="font-weight: 700"></asp:Label>
                 <br />
                 <br />
-                <asp:Label ID="Label15" runat="server" Text="STEP 1: Enter Group Name:"></asp:Label>
+                <asp:Label ID="Label15" runat="server" Text="STEP 1: Enter Group Name:" style="font-weight: 700"></asp:Label>
                 <br />
-                </strong>
+                
                 <br />
                 <asp:TextBox ID="txtGroupName" runat="server"></asp:TextBox>
                     <br />
@@ -83,31 +92,24 @@
                      </asp:ListBox> 
                     <br />
                     <asp:HiddenField ID="grpMemHiddenField" runat="server" />
+                       <asp:Panel ID="addgroupPanel" runat="server">
+                           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                           <asp:Button ID="Button1" runat="server" OnClick="btnAddGroup_Click" Text="Add Group" />
+                           &nbsp;&nbsp;&nbsp;&nbsp;
+                       </asp:Panel>
                     <br />
-                    <asp:Button ID="Button1" runat="server" Text="Add Group" OnClick="btnAddGroup_Click" />
-                    <asp:Button ID="Button2" runat="server" Text="Remove Group" OnClick="btnRemoveGroup_Click" />
+                       <asp:Panel ID="groupButtonPanel" runat="server" Visible="False">
+                           <asp:Button ID="Button2" runat="server" OnClick="btnRemoveGroup_Click" Text="Remove Group" />
+                           &nbsp;
+                           <asp:Button ID="Button6" runat="server" Text="Edit Group" />
+                       </asp:Panel>
                     <br />
                 <br />
-                </td>
+                   </asp:Panel>
+                
+            </td>
 
-                <td valign="top" style="border: 1px solid black">
-                    <strong>
-                <asp:Label ID="Label9" runat="server" Text="Groups Created:"></asp:Label>
-                    </strong>
-                <br />
-                    <br />
-                <asp:DropDownList ID="groupDownDown" runat="server" OnSelectedIndexChanged="groupDownDown_SelectedIndexChanged" AutoPostBack="True">
-                </asp:DropDownList>
-                <br />
-                <br />
-                    <strong>
-                <asp:Label ID="Label3" runat="server" Text="Members in Group:"></asp:Label>
-                    <br />
-                    </strong>
-                <br/>
-                <asp:ListBox ID="ListBox2" runat="server"></asp:ListBox>
-
-                </td>
+               
             </tr>
              </table>
         <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true"></asp:ScriptManager>
@@ -288,15 +290,16 @@
                
                
                var tar;
-               $("#TextBox1").on("click", function (e) {
+               $("#dropDownBox1").on("click", function (e) {
                    tar = e.target.id;
                //    alert("Target control is :" + tar);
                })
 
-               $("#TextBox2").on("click", function (e) {
+               $("#dropDownBox2").on("click", function (e) {
                    tar = e.target.id;
                  //  alert("Target control is :" + tar);
                })
+
 
                $(document).ready(function () {
                    $('video').click(function (e) {
