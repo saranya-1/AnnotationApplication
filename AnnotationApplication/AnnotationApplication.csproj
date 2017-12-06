@@ -142,6 +142,7 @@
     <Content Include="Annotationform.aspx" />
     <Content Include="scripts\ai.0.22.9-build00167.js" />
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
+    <Content Include="StyleSheet.css" />
     <Content Include="thankYou.aspx" />
     <Content Include="Videos\output23.mp4" />
     <Content Include="Videos\vid_002.mp4" />

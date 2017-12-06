@@ -6,7 +6,7 @@
     <edmx:Diagrams>
       <Diagram DiagramId="26ec72c27c534d6c8fd2b5c2d7917bbc" Name="Diagram1">
         <EntityTypeShape EntityType="AnnotationDBModel.AnnotationDetail" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="AnnotationDBModel.Annotation" Width="1.5" PointX="3" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="AnnotationDBModel.Annotation" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="AnnotationDBModel.Group" Width="1.5" PointX="3" PointY="8.625" IsExpanded="true" />
         <EntityTypeShape EntityType="AnnotationDBModel.VideoDetail" Width="1.5" PointX="3" PointY="4.125" IsExpanded="true" />
         <EntityTypeShape EntityType="AnnotationDBModel.Video" Width="1.5" PointX="0.75" PointY="3.375" IsExpanded="true" />

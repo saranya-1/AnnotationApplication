@@ -40,6 +40,24 @@ namespace AnnotationApplication {
         protected global::System.Web.UI.WebControls.HiddenField curTimeHiddenField;
         
         /// <summary>
+        /// ScriptManager1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.ScriptManager ScriptManager1;
+        
+        /// <summary>
+        /// relationshipTable control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTable relationshipTable;
+        
+        /// <summary>
         /// Label16 control.
         /// </summary>
         /// <remarks>
@@ -184,6 +202,24 @@ namespace AnnotationApplication {
         protected global::System.Web.UI.WebControls.Panel groupButtonPanel;
         
         /// <summary>
+        /// Addmembers control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Addmembers;
+        
+        /// <summary>
+        /// Removemember control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Removemember;
+        
+        /// <summary>
         /// Button2 control.
         /// </summary>
         /// <remarks>
@@ -193,40 +229,13 @@ namespace AnnotationApplication {
         protected global::System.Web.UI.WebControls.Button Button2;
         
         /// <summary>
-        /// Button6 control.
+        /// Label3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button6;
-        
-        /// <summary>
-        /// ScriptManager1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.ScriptManager ScriptManager1;
-        
-        /// <summary>
-        /// Label17 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label17;
-        
-        /// <summary>
-        /// relationshipTable control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTable relationshipTable;
+        protected global::System.Web.UI.WebControls.Label Label3;
         
         /// <summary>
         /// Label7 control.
@@ -247,31 +256,22 @@ namespace AnnotationApplication {
         protected global::System.Web.UI.WebControls.CheckBoxList CheckBoxList1;
         
         /// <summary>
-        /// Label6 control.
+        /// Label4 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label6;
+        protected global::System.Web.UI.WebControls.Label Label4;
         
         /// <summary>
-        /// CheckBoxList2 control.
+        /// CheckBoxList4 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBoxList CheckBoxList2;
-        
-        /// <summary>
-        /// relationshipTable1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTable relationshipTable1;
+        protected global::System.Web.UI.WebControls.CheckBoxList CheckBoxList4;
         
         /// <summary>
         /// Label5 control.
@@ -292,22 +292,22 @@ namespace AnnotationApplication {
         protected global::System.Web.UI.WebControls.CheckBoxList CheckBoxList3;
         
         /// <summary>
-        /// Label4 control.
+        /// Label6 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label4;
+        protected global::System.Web.UI.WebControls.Label Label6;
         
         /// <summary>
-        /// CheckBoxList4 control.
+        /// CheckBoxList2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBoxList CheckBoxList4;
+        protected global::System.Web.UI.WebControls.CheckBoxList CheckBoxList2;
         
         /// <summary>
         /// btnAdd control.
