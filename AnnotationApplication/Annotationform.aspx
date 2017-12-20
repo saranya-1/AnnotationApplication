@@ -6,40 +6,40 @@
 <head runat="server">
     <title></title>
     <style type="text/css">
-        .auto-style4 {
-            width: 67%;
-            height: 29px;
-        }
-        .auto-style5 {
-            height: 137px;
-            width: 430px;
-        }
-        .auto-style11 {
-            width: 323px;
-            height: 137px;
-        }
-       
+               
         .auto-style12 {
             margin-left: 0px;
         }
        
         .auto-style13 {
-            width: 100%;
+            width: 1575px;
             height: 137px;
-            margin-left: 234px;
-            margin-right: 234px
-           
-       
-        }
-        .auto-style14 {
-            width: 20%;
-            height: 137px;
+            margin-left: 200px;
+            margin-right: 200px
         }
         .auto-style15 {
-            width: 40%;
+            width: 674px;
             height: 137px;
         }
-        .auto-style16 {
+               
+        .auto-style19 {
+            width: 417px;
+             height: 65px;
+            float: right;
+        }
+       
+        .auto-style20 {
+            width: 814px;
+            height:105px;
+        }
+        .auto-style21 {
+            width: 391px;
+            float: left;
+            height: 65px;
+        }
+       
+        .auto-style22 {
+            width: 798px;
             height: 137px;
         }
        
@@ -55,63 +55,62 @@
             
         <br />
             <br />
-                    <div id="video_container">
-                        <video style="display:block; margin: 0 auto;" controls="controls" id="video" poster="transparent.png">
-                            <source src="Videos/vid_002.mp4" type="video/mp4"/>
-                         
-                            </video>
-                           <audio id="myaudio" >
-                            <source src="Audio/Joannas Wedding Toast (online-audio-converter.com).mp3" type="audio/mpeg"/>
-                            </audio>
+            <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true"></asp:ScriptManager>
+                        < <div id="video_container">
+                        <video style="display:block; margin: 0 auto;" controls="controls" id="video">
+                            <source src="<%=videoNameUrl %>" type="video/mp4"/>
+                        </video>
+         </div>
                     <div id="status" ></div>
                         <asp:HiddenField ID="curTimeHiddenField" runat="server" OnValueChanged="curTimeHiddenField_ValueChanged" />
                         <br />
                     </div>   
             
-        <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true"></asp:ScriptManager>
+        
       
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       
             <br />
+            <asp:HiddenField ID="totalLengthVideo" runat="server" />
+            <asp:HiddenField ID="videoNameHiddenField" runat="server" />
             <br />
        
         <table  id="relationshipTable" runat="server" align="center" class="auto-style13">
             <tr >
-                <td valign="top" class="auto-style14" style="border: 1px solid black" >
-                    <strong>
+                <td valign="top" class="auto-style22" style="border: 1px solid black" >
+                    <%--<strong>--%>
 
                     <asp:Label ID="Label16" runat="server" Text="Pair Relationship" ForeColor="Brown"></asp:Label>
-
                     <br />
                     <br />
-                    <asp:Label ID="Label11" runat="server" Text="STEP 1: Please select the first Person/Group:" ForeColor="DodgerBlue" ></asp:Label>
+                   <div class="auto-style20" >
+                    <div class="auto-style21"  >
+                    <asp:Label ID="Label11" runat="server" Text="STEP 1: Please select the first Person/Group:" style="font-weight: 700" ForeColor="DodgerBlue" ></asp:Label>
+                        <br />
                     <br />
-                    <br />
-                    <%--<asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>--%>
-                        <asp:DropDownList ID="dropDownBox1" runat="server" OnSelectedIndexChanged="dropDownBox1_SelectedIndexChanged" AutoPostBack="True" Height="29px" Width="177px">
+                   <asp:DropDownList ID="dropDownBox1" runat="server" OnSelectedIndexChanged="dropDownBox1_SelectedIndexChanged" AutoPostBack="True" Height="29px" Width="177px">
                          <asp:ListItem>Please select</asp:ListItem>
                          <asp:ListItem>Create group</asp:ListItem>
                     </asp:DropDownList>
+                            </div>
+                            
+               <div class="auto-style19" >
+                    <asp:Label ID="Label12" runat="server" Text="STEP 2: Please select the second  Person/Group:" style="font-weight: 700" ForeColor="DodgerBlue" ></asp:Label>
                     <br />
                     <br />
-                    <asp:Label ID="Label12" runat="server" Text="STEP 2: Please select the second  Person/Group" ForeColor="DodgerBlue" ></asp:Label>
-                    <br />
-                    <br />
+                    
                         <asp:DropDownList ID="dropDownBox2" runat="server" OnSelectedIndexChanged="dropDownBox2_SelectedIndexChanged" AutoPostBack="True" Height="28px" Width="177px">
                          <asp:ListItem>Please select</asp:ListItem>
                           <asp:ListItem>Create group</asp:ListItem>
                         </asp:DropDownList>
+                   </div>
+                            
+                    <br />
+                      
+                  </div>
                     <%--<asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>--%>
                     <br />
-                    </strong>                  
-                    <%--<asp:DropDownList ID="dropDownBox2" runat="server" OnSelectedIndexChanged="dropDownBox2_SelectedIndexChanged">
-                         <asp:ListItem>Please select</asp:ListItem>
-                    </asp:DropDownList>--%>
-                    <asp:HiddenField ID="HiddenField1" runat="server" OnValueChanged="HiddenField1_ValueChanged" />
                     <br />
-                    <br />
-                </td>
-                <td valign="top" style="border: 1px solid black" class="auto-style11" >
                     <asp:Panel ID="createGroupPanel" runat="server" visible="false" Width="308px">
                        <asp:Label ID="Label13" runat="server" Text="To create a group:" style="font-weight: 700" ForeColor="Brown"></asp:Label>
                 <br />
@@ -146,7 +145,15 @@
                                 </div>
                        </asp:Panel>
                    </asp:Panel>
+                    <%--</strong> --%>                 
+                    <%--<asp:DropDownList ID="dropDownBox2" runat="server" OnSelectedIndexChanged="dropDownBox2_SelectedIndexChanged">
+                         <asp:ListItem>Please select</asp:ListItem>
+                    </asp:DropDownList>--%>
+                    <asp:HiddenField ID="HiddenField1" runat="server" OnValueChanged="HiddenField1_ValueChanged" />
+                    <br />
+                    <br />
                 </td>
+             
                
            <td valign="top" style="border: 1px solid black; " class="auto-style15">
                <asp:Label ID="Label3" runat="server" Text="STEP3:Choose Relationships" Font-Bold="True" ForeColor="DodgerBlue" ></asp:Label>
@@ -173,8 +180,7 @@
                    <asp:ListItem>M</asp:ListItem>
                    <asp:ListItem>Uncle-Child</asp:ListItem>
                    <asp:ListItem>Others</asp:ListItem>
-                   </asp:CheckBoxList>
-                   
+                   </asp:CheckBoxList>                 
                
 &nbsp;<br />
                     <%--<div style="float:left; width:auto;display:inline-block">--%>
@@ -189,8 +195,7 @@
                    <asp:ListItem>Lovers</asp:ListItem>
                    <asp:ListItem>Others</asp:ListItem>
                    </asp:CheckBoxList>
-                    </div>
-             
+                    </div>        
                   
                    
                &nbsp;
@@ -233,10 +238,6 @@
                     </div>
              
             </td>
-        
-             <td class="auto-style16"></td>
-            <td class="auto-style16"></td>
-           
             </tr>
             </table>
             <br />
@@ -255,8 +256,8 @@
                          </itemtemplate> 
                       <ItemStyle HorizontalAlign="Center" />
                   </asp:TemplateField>
-                <asp:BoundField DataField="person1" HeaderText="Person1" SortExpression="" ItemStyle-ForeColor="SeaGreen" ItemStyle-HorizontalAlign="Center" HeaderStyle-ForeColor="Brown"/>
-                <asp:BoundField DataField="person2" HeaderText="Person2"  SortExpression="" ItemStyle-ForeColor="SeaGreen" ItemStyle-HorizontalAlign="Center" HeaderStyle-ForeColor="Brown"/>
+                <asp:BoundField DataField="Group.group_Name" HeaderText="Person1" SortExpression="" ItemStyle-ForeColor="SeaGreen" ItemStyle-HorizontalAlign="Center" HeaderStyle-ForeColor="Brown"/>
+                <asp:BoundField DataField="Group1.group_Name" HeaderText="Person2"  SortExpression="" ItemStyle-ForeColor="SeaGreen" ItemStyle-HorizontalAlign="Center" HeaderStyle-ForeColor="Brown"/>
                 <asp:BoundField DataField="relationship" HeaderText="Relationship" SortExpression="" ItemStyle-ForeColor="SeaGreen" ItemStyle-HorizontalAlign="Center" HeaderStyle-ForeColor="Brown"/>
             </Columns>
         </asp:GridView> 
@@ -286,11 +287,11 @@
             }
           }
 
-          //  display video duration when available
-          //video.addEventListener("loadedmetadata", function () {
-          //    vLength = video.duration.toFixed(1);
-          //    document.getElementById("vLen").textContent = vLength; // global variable
-          //}, false);
+           // display video duration when available
+          video.addEventListener("loadedmetadata", function () {
+              vLength = video.duration.toFixed(1);
+              document.getElementById("totalLengthVideo").value = vLength; // global variable
+          }, false);
 
           ////  display the current and remaining times
           //video.addEventListener("timeupdate", function () {
@@ -318,9 +319,7 @@
                 var aud = document.getElementById('myaudio');
                 var textbox = document.getElementById("curTimeHiddenField");
                 video.currentTime = textbox.value;
-                video.pause;
-                myaudio.pause;
-                
+                video.pause;                
             }
   
        </script>
@@ -333,12 +332,12 @@
                var tar;
                $("#dropDownBox1").on("click", function (e) {
                    tar = e.target.id;
-               //    alert("Target control is :" + tar);
+                  // alert("Target control is :" + tar);
                })
 
                $("#dropDownBox2").on("click", function (e) {
                    tar = e.target.id;
-                 //  alert("Target control is :" + tar);
+                  // alert("Target control is :" + tar);
                })
 
 
@@ -349,7 +348,9 @@
                            var x = e.pageX - offset.left;
                            var y = e.pageY - offset.top;
                            var cuurTime = document.getElementById("curTimeHiddenField").value;
-                           var result = PageMethods.getPersonDetails(x, y,cuurTime, onSuccess, onFailure);
+                           var totalLength = document.getElementById("totalLengthVideo").value;
+                           var videoname = document.getElementById("videoNameHiddenField").value;
+                           var result = PageMethods.getPersonDetails(x, y,cuurTime,totalLength,videoname, onSuccess, onFailure);
 
                            function onSuccess(result) {
                                if (result == "") {
@@ -385,6 +386,12 @@
                    });
                });
 
+               $(document).ready(function () {
+                   function disableBack() { window.history.forward() }
+
+                   window.onload = disableBack();
+                   window.onpageshow = function (evt) { if (evt.persisted) disableBack() }
+               });
            </script>  
             
     </form>

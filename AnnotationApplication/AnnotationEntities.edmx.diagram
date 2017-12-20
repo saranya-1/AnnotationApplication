@@ -4,16 +4,18 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="26ec72c27c534d6c8fd2b5c2d7917bbc" Name="Diagram1">
-        <EntityTypeShape EntityType="AnnotationDBModel.AnnotationDetail" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="AnnotationDBModel.Annotation" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="AnnotationDBModel.Group" Width="1.5" PointX="3" PointY="8.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="AnnotationDBModel.VideoDetail" Width="1.5" PointX="3" PointY="4.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="AnnotationDBModel.Video" Width="1.5" PointX="0.75" PointY="3.375" IsExpanded="true" />
-        <AssociationConnector Association="AnnotationDBModel.FK__Annotatio__group__21B6055D" ManuallyRouted="false" />
+      <Diagram DiagramId="414430d8a5664303ad3c5a1f6905a442" Name="Diagram1">
+        <EntityTypeShape EntityType="AnnotationDBModel.AnnotationDetail" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="AnnotationDBModel.Annotation" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AnnotationDBModel.Group" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AnnotationDBModel.VideoDetail" Width="1.5" PointX="2.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AnnotationDBModel.Video" Width="1.5" PointX="1.5" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AnnotationDBModel.videos_dump" Width="1.5" PointX="4.75" PointY="4.75" IsExpanded="true" />
+        <AssociationConnector Association="AnnotationDBModel.FK__Annotatio__perso__3B75D760" ManuallyRouted="false" />
+        <AssociationConnector Association="AnnotationDBModel.FK__Annotatio__perso__3C69FB99" ManuallyRouted="false" />
         <AssociationConnector Association="AnnotationDBModel.FK_AnnotationDetail_Annotations" ManuallyRouted="false" />
         <AssociationConnector Association="AnnotationDBModel.FK_Annotations_Videos" ManuallyRouted="false" />
-        <AssociationConnector Association="AnnotationDBModel.FK_VideoDetails_Videos" ManuallyRouted="false" />
+        <AssociationConnector Association="AnnotationDBModel.FK_VideoVideoDetails" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

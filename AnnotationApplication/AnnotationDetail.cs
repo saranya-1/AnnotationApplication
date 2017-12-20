@@ -17,12 +17,12 @@ namespace AnnotationApplication
         public int annDetail_ID { get; set; }
         public Nullable<int> annotation_ID { get; set; }
         public Nullable<int> frame_vid_ID { get; set; }
-        public string person1 { get; set; }
-        public string person2 { get; set; }
-        public Nullable<int> groupID { get; set; }
+        public Nullable<int> person1 { get; set; }
+        public Nullable<int> person2 { get; set; }
         public string relationship { get; set; }
     
         public virtual Group Group { get; set; }
+        public virtual Group Group1 { get; set; }
         public virtual Annotation Annotation { get; set; }
     }
 }

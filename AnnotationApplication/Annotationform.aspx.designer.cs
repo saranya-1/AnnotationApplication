@@ -31,6 +31,15 @@ namespace AnnotationApplication {
         protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
+        /// ScriptManager1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.ScriptManager ScriptManager1;
+        
+        /// <summary>
         /// curTimeHiddenField control.
         /// </summary>
         /// <remarks>
@@ -40,13 +49,22 @@ namespace AnnotationApplication {
         protected global::System.Web.UI.WebControls.HiddenField curTimeHiddenField;
         
         /// <summary>
-        /// ScriptManager1 control.
+        /// totalLengthVideo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.ScriptManager ScriptManager1;
+        protected global::System.Web.UI.WebControls.HiddenField totalLengthVideo;
+        
+        /// <summary>
+        /// videoNameHiddenField control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField videoNameHiddenField;
         
         /// <summary>
         /// relationshipTable control.
@@ -101,15 +119,6 @@ namespace AnnotationApplication {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList dropDownBox2;
-        
-        /// <summary>
-        /// HiddenField1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField HiddenField1;
         
         /// <summary>
         /// createGroupPanel control.
@@ -227,6 +236,15 @@ namespace AnnotationApplication {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Button2;
+        
+        /// <summary>
+        /// HiddenField1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField HiddenField1;
         
         /// <summary>
         /// Label3 control.

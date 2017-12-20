@@ -80,6 +80,18 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.WindowsAPICodePack-Core.1.1.0.0\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack.Shell, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.WindowsAPICodePack-Shell.1.1.0.0\lib\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack.ShellExtensions, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.WindowsAPICodePack-Shell.1.1.0.0\lib\Microsoft.WindowsAPICodePack.ShellExtensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -144,9 +156,98 @@
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="StyleSheet.css" />
     <Content Include="thankYou.aspx" />
-    <Content Include="Videos\output23.mp4" />
+    <Content Include="Videos\vid_001.mp4" />
     <Content Include="Videos\vid_002.mp4" />
-    <Content Include="Web.config" />
+    <Content Include="Videos\vid_003.mp4" />
+    <Content Include="Videos\vid_004.mp4" />
+    <Content Include="Videos\vid_005.mp4" />
+    <Content Include="Videos\vid_006.mp4" />
+    <Content Include="Videos\vid_007.mp4" />
+    <Content Include="Videos\vid_008.mp4" />
+    <Content Include="Videos\vid_009.mp4" />
+    <Content Include="Videos\vid_010.mp4" />
+    <Content Include="Videos\vid_011.mp4" />
+    <Content Include="Videos\vid_012.mp4" />
+    <Content Include="Videos\vid_013.mp4" />
+    <Content Include="Videos\vid_014.mp4" />
+    <Content Include="Videos\vid_015.mp4" />
+    <Content Include="Videos\vid_016.mp4" />
+    <Content Include="Videos\vid_017.mp4" />
+    <Content Include="Videos\vid_018.mp4" />
+    <Content Include="Videos\vid_019.mp4" />
+    <Content Include="Videos\vid_020.mp4" />
+    <Content Include="Videos\vid_021.mp4" />
+    <Content Include="Videos\vid_022.mp4" />
+    <Content Include="Videos\vid_023.mp4" />
+    <Content Include="Videos\vid_024.mp4" />
+    <Content Include="Videos\vid_025.mp4" />
+    <Content Include="Videos\vid_026.mp4" />
+    <Content Include="Videos\vid_027.mp4" />
+    <Content Include="Videos\vid_028.mp4" />
+    <Content Include="Videos\vid_029.mp4" />
+    <Content Include="Videos\vid_030.mp4" />
+    <Content Include="Videos\vid_031.mp4" />
+    <Content Include="Videos\vid_032.mp4" />
+    <Content Include="Videos\vid_033.mp4" />
+    <Content Include="Videos\vid_034.mp4" />
+    <Content Include="Videos\vid_035.mp4" />
+    <Content Include="Videos\vid_036.mp4" />
+    <Content Include="Videos\vid_037.mp4" />
+    <Content Include="Videos\vid_038.mp4" />
+    <Content Include="Videos\vid_040.mp4" />
+    <Content Include="Videos\vid_041.mp4" />
+    <Content Include="Videos\vid_042.mp4" />
+    <Content Include="Videos\vid_043.mp4" />
+    <Content Include="Videos\vid_044.mp4" />
+    <Content Include="Videos\vid_045.mp4" />
+    <Content Include="Videos\vid_046.mp4" />
+    <Content Include="Videos\vid_047.mp4" />
+    <Content Include="Videos\vid_048.mp4" />
+    <Content Include="Videos\vid_049.mp4" />
+    <Content Include="Videos\vid_050.mp4" />
+    <Content Include="Videos\vid_061.mp4" />
+    <Content Include="Videos\vid_062.mp4" />
+    <Content Include="Videos\vid_063.mp4" />
+    <Content Include="Videos\vid_064.mp4" />
+    <Content Include="Videos\vid_065.mp4" />
+    <Content Include="Videos\vid_066.mp4" />
+    <Content Include="Videos\vid_067.mp4" />
+    <Content Include="Videos\vid_068.mp4" />
+    <Content Include="Videos\vid_069.mp4" />
+    <Content Include="Videos\vid_070.mp4" />
+    <Content Include="Videos\vid_071.mp4" />
+    <Content Include="Videos\vid_072.mp4" />
+    <Content Include="Videos\vid_073.mp4" />
+    <Content Include="Videos\vid_074.mp4" />
+    <Content Include="Videos\vid_075.mp4" />
+    <Content Include="Videos\vid_076.mp4" />
+    <Content Include="Videos\vid_077.mp4" />
+    <Content Include="Videos\vid_078.mp4" />
+    <Content Include="Videos\vid_079.mp4" />
+    <Content Include="Videos\vid_080.mp4" />
+    <Content Include="Videos\vid_081.mp4" />
+    <Content Include="Videos\vid_082.mp4" />
+    <Content Include="Videos\vid_083.mp4" />
+    <Content Include="Videos\vid_084.mp4" />
+    <Content Include="Videos\vid_085.mp4" />
+    <Content Include="Videos\vid_086.mp4" />
+    <Content Include="Videos\vid_087.mp4" />
+    <Content Include="Videos\vid_088.mp4" />
+    <Content Include="Videos\vid_089.mp4" />
+    <Content Include="Videos\vid_090.mp4" />
+    <Content Include="Videos\vid_091.mp4" />
+    <Content Include="Videos\vid_092.mp4" />
+    <Content Include="Videos\vid_093.mp4" />
+    <Content Include="Videos\vid_094.mp4" />
+    <Content Include="Videos\vid_095.mp4" />
+    <Content Include="Videos\vid_096.mp4" />
+    <Content Include="Videos\vid_097.mp4" />
+    <Content Include="Videos\vid_098.mp4" />
+    <Content Include="Videos\vid_099.mp4" />
+    <Content Include="Videos\vid_100.mp4" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Annotation.cs">
@@ -198,7 +299,11 @@
     <Compile Include="Video.cs">
       <DependentUpon>AnnotationEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="VideoClass.cs" />
     <Compile Include="VideoDetail.cs">
+      <DependentUpon>AnnotationEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="videos_dump.cs">
       <DependentUpon>AnnotationEntities.tt</DependentUpon>
     </Compile>
   </ItemGroup>

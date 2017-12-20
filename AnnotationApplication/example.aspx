@@ -10,8 +10,8 @@
     <form id="form1" runat="server">
     <div>
      <div id="video_container">
-                        <video width="480" height="360" controls="controls" id="video">
-                            <source src="Videos/vid_002.mp4" type="video/mp4"/>
+                        <video width="600" height="400" controls="controls" id="video">
+                            <source src="Videos/vid_003.mp4" type="video/mp4"/>
                         </video>
          </div>
        

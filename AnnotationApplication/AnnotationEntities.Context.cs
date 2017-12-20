@@ -30,5 +30,6 @@ namespace AnnotationApplication
         public DbSet<Group> Groups { get; set; }
         public DbSet<VideoDetail> VideoDetails { get; set; }
         public DbSet<Video> Videos { get; set; }
+        public DbSet<videos_dump> videos_dump { get; set; }
     }
 }

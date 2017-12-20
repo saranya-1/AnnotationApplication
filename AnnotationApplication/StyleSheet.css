@@ -1,9 +1,5 @@
 ﻿video{
-    object-fit: fill;
+   object-fit: fill;
     width:680px; 
    height:460px;  
-    background:transparent url('mom.jpg') no-repeat 0 0; 
-   background-size:cover; 
-   
-   
 }

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="AnnotationDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="AnnotationDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AnnotationDetail">
           <Key>
             <PropertyRef Name="annDetail_ID" />
@@ -12,9 +12,8 @@
           <Property Name="annDetail_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="annotation_ID" Type="int" />
           <Property Name="frame_vid_ID" Type="int" />
-          <Property Name="person1" Type="nvarchar" MaxLength="100" />
-          <Property Name="person2" Type="nvarchar" MaxLength="100" />
-          <Property Name="groupID" Type="int" />
+          <Property Name="person1" Type="int" />
+          <Property Name="person2" Type="int" />
           <Property Name="relationship" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="Annotations">
@@ -31,12 +30,13 @@
           <Property Name="group_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="group_Name" Type="nvarchar" MaxLength="100" />
           <Property Name="persons" Type="nvarchar" MaxLength="500" />
+          <Property Name="annotion_detail_ID" Type="int" />
         </EntityType>
         <EntityType Name="VideoDetails">
           <Key>
             <PropertyRef Name="frame_ID" />
           </Key>
-          <Property Name="frame_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="frame_ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="video_ID" Type="int" />
           <Property Name="frame_Vid_ID" Type="int" />
           <Property Name="track_ID" Type="int" />
@@ -52,7 +52,20 @@
           <Property Name="video_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="video_Name" Type="nvarchar" MaxLength="50" />
         </EntityType>
-        <Association Name="FK__Annotatio__group__21B6055D">
+        <EntityType Name="videos_dump">
+          <Key>
+            <PropertyRef Name="frame_ID" />
+          </Key>
+          <Property Name="frame_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="video_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="frame_Vid_ID" Type="int" />
+          <Property Name="track_ID" Type="int" />
+          <Property Name="x" Type="int" />
+          <Property Name="y" Type="int" />
+          <Property Name="width" Type="int" />
+          <Property Name="height" Type="int" />
+        </EntityType>
+        <Association Name="FK__Annotatio__perso__3B75D760">
           <End Role="Groups" Type="Self.Groups" Multiplicity="0..1" />
           <End Role="AnnotationDetail" Type="Self.AnnotationDetail" Multiplicity="*" />
           <ReferentialConstraint>
@@ -60,7 +73,19 @@
               <PropertyRef Name="group_ID" />
             </Principal>
             <Dependent Role="AnnotationDetail">
-              <PropertyRef Name="groupID" />
+              <PropertyRef Name="person1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Annotatio__perso__3C69FB99">
+          <End Role="Groups" Type="Self.Groups" Multiplicity="0..1" />
+          <End Role="AnnotationDetail" Type="Self.AnnotationDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="group_ID" />
+            </Principal>
+            <Dependent Role="AnnotationDetail">
+              <PropertyRef Name="person2" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -88,7 +113,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_VideoDetails_Videos">
+        <Association Name="FK_VideoVideoDetails">
           <End Role="Videos" Type="Self.Videos" Multiplicity="0..1" />
           <End Role="VideoDetails" Type="Self.VideoDetails" Multiplicity="*" />
           <ReferentialConstraint>
@@ -106,7 +131,12 @@
           <EntitySet Name="Groups" EntityType="Self.Groups" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VideoDetails" EntityType="Self.VideoDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Videos" EntityType="Self.Videos" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Annotatio__group__21B6055D" Association="Self.FK__Annotatio__group__21B6055D">
+          <EntitySet Name="videos_dump" EntityType="Self.videos_dump" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Annotatio__perso__3B75D760" Association="Self.FK__Annotatio__perso__3B75D760">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="AnnotationDetail" EntitySet="AnnotationDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Annotatio__perso__3C69FB99" Association="Self.FK__Annotatio__perso__3C69FB99">
             <End Role="Groups" EntitySet="Groups" />
             <End Role="AnnotationDetail" EntitySet="AnnotationDetail" />
           </AssociationSet>
@@ -118,13 +148,12 @@
             <End Role="Videos" EntitySet="Videos" />
             <End Role="Annotations" EntitySet="Annotations" />
           </AssociationSet>
-          <AssociationSet Name="FK_VideoDetails_Videos" Association="Self.FK_VideoDetails_Videos">
+          <AssociationSet Name="FK_VideoVideoDetails" Association="Self.FK_VideoVideoDetails">
             <End Role="Videos" EntitySet="Videos" />
             <End Role="VideoDetails" EntitySet="VideoDetails" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="AnnotationDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -135,11 +164,11 @@
           <Property Name="annDetail_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="annotation_ID" Type="Int32" />
           <Property Name="frame_vid_ID" Type="Int32" />
-          <Property Name="person1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="person2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="groupID" Type="Int32" />
+          <Property Name="person1" Type="Int32" />
+          <Property Name="person2" Type="Int32" />
           <Property Name="relationship" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Group" Relationship="Self.FK__Annotatio__group__21B6055D" FromRole="AnnotationDetail" ToRole="Groups" />
+          <NavigationProperty Name="Group" Relationship="Self.FK__Annotatio__perso__3B75D760" FromRole="AnnotationDetail" ToRole="Groups" />
+          <NavigationProperty Name="Group1" Relationship="Self.FK__Annotatio__perso__3C69FB99" FromRole="AnnotationDetail" ToRole="Groups" />
           <NavigationProperty Name="Annotation" Relationship="Self.FK_AnnotationDetail_Annotations" FromRole="AnnotationDetail" ToRole="Annotations" />
         </EntityType>
         <EntityType Name="Annotation">
@@ -158,13 +187,15 @@
           <Property Name="group_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="group_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="persons" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AnnotationDetails" Relationship="Self.FK__Annotatio__group__21B6055D" FromRole="Groups" ToRole="AnnotationDetail" />
+          <Property Name="annotion_detail_ID" Type="Int32" />
+          <NavigationProperty Name="AnnotationDetails" Relationship="Self.FK__Annotatio__perso__3B75D760" FromRole="Groups" ToRole="AnnotationDetail" />
+          <NavigationProperty Name="AnnotationDetails1" Relationship="Self.FK__Annotatio__perso__3C69FB99" FromRole="Groups" ToRole="AnnotationDetail" />
         </EntityType>
         <EntityType Name="VideoDetail">
           <Key>
             <PropertyRef Name="frame_ID" />
           </Key>
-          <Property Name="frame_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="frame_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="video_ID" Type="Int32" />
           <Property Name="frame_Vid_ID" Type="Int32" />
           <Property Name="track_ID" Type="Int32" />
@@ -172,7 +203,7 @@
           <Property Name="y" Type="Int32" />
           <Property Name="width" Type="Int32" />
           <Property Name="height" Type="Int32" />
-          <NavigationProperty Name="Video" Relationship="Self.FK_VideoDetails_Videos" FromRole="VideoDetails" ToRole="Videos" />
+          <NavigationProperty Name="Video" Relationship="AnnotationDBModel.FK_VideoVideoDetails" FromRole="VideoDetail" ToRole="Video" />
         </EntityType>
         <EntityType Name="Video">
           <Key>
@@ -181,9 +212,22 @@
           <Property Name="video_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="video_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Annotations" Relationship="Self.FK_Annotations_Videos" FromRole="Videos" ToRole="Annotations" />
-          <NavigationProperty Name="VideoDetails" Relationship="Self.FK_VideoDetails_Videos" FromRole="Videos" ToRole="VideoDetails" />
+          <NavigationProperty Name="VideoDetails" Relationship="AnnotationDBModel.FK_VideoVideoDetails" FromRole="Video" ToRole="VideoDetail" />
         </EntityType>
-        <Association Name="FK__Annotatio__group__21B6055D">
+        <EntityType Name="videos_dump">
+          <Key>
+            <PropertyRef Name="frame_ID" />
+          </Key>
+          <Property Name="frame_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="video_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="frame_Vid_ID" Type="Int32" />
+          <Property Name="track_ID" Type="Int32" />
+          <Property Name="x" Type="Int32" />
+          <Property Name="y" Type="Int32" />
+          <Property Name="width" Type="Int32" />
+          <Property Name="height" Type="Int32" />
+        </EntityType>
+        <Association Name="FK__Annotatio__perso__3B75D760">
           <End Role="Groups" Type="Self.Group" Multiplicity="0..1" />
           <End Role="AnnotationDetail" Type="Self.AnnotationDetail" Multiplicity="*" />
           <ReferentialConstraint>
@@ -191,7 +235,19 @@
               <PropertyRef Name="group_ID" />
             </Principal>
             <Dependent Role="AnnotationDetail">
-              <PropertyRef Name="groupID" />
+              <PropertyRef Name="person1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Annotatio__perso__3C69FB99">
+          <End Role="Groups" Type="Self.Group" Multiplicity="0..1" />
+          <End Role="AnnotationDetail" Type="Self.AnnotationDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="group_ID" />
+            </Principal>
+            <Dependent Role="AnnotationDetail">
+              <PropertyRef Name="person2" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -219,25 +275,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_VideoDetails_Videos">
-          <End Role="Videos" Type="Self.Video" Multiplicity="0..1" />
-          <End Role="VideoDetails" Type="Self.VideoDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Videos">
-              <PropertyRef Name="video_ID" />
-            </Principal>
-            <Dependent Role="VideoDetails">
-              <PropertyRef Name="video_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="AnnotationDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AnnotationDetails" EntityType="Self.AnnotationDetail" />
           <EntitySet Name="Annotations" EntityType="Self.Annotation" />
           <EntitySet Name="Groups" EntityType="Self.Group" />
           <EntitySet Name="VideoDetails" EntityType="Self.VideoDetail" />
           <EntitySet Name="Videos" EntityType="Self.Video" />
-          <AssociationSet Name="FK__Annotatio__group__21B6055D" Association="Self.FK__Annotatio__group__21B6055D">
+          <EntitySet Name="videos_dump" EntityType="Self.videos_dump" />
+          <AssociationSet Name="FK__Annotatio__perso__3B75D760" Association="Self.FK__Annotatio__perso__3B75D760">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="AnnotationDetail" EntitySet="AnnotationDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Annotatio__perso__3C69FB99" Association="Self.FK__Annotatio__perso__3C69FB99">
             <End Role="Groups" EntitySet="Groups" />
             <End Role="AnnotationDetail" EntitySet="AnnotationDetails" />
           </AssociationSet>
@@ -249,11 +298,23 @@
             <End Role="Videos" EntitySet="Videos" />
             <End Role="Annotations" EntitySet="Annotations" />
           </AssociationSet>
-          <AssociationSet Name="FK_VideoDetails_Videos" Association="Self.FK_VideoDetails_Videos">
-            <End Role="Videos" EntitySet="Videos" />
-            <End Role="VideoDetails" EntitySet="VideoDetails" />
+          <AssociationSet Name="FK_VideoVideoDetails" Association="AnnotationDBModel.FK_VideoVideoDetails">
+            <End Role="Video" EntitySet="Videos" />
+            <End Role="VideoDetail" EntitySet="VideoDetails" />
           </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_VideoVideoDetails">
+          <End Type="AnnotationDBModel.Video" Role="Video" Multiplicity="0..1" />
+          <End Type="AnnotationDBModel.VideoDetail" Role="VideoDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Video">
+              <PropertyRef Name="video_ID" />
+            </Principal>
+            <Dependent Role="VideoDetail">
+              <PropertyRef Name="video_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -268,7 +329,6 @@
                 <ScalarProperty Name="frame_vid_ID" ColumnName="frame_vid_ID" />
                 <ScalarProperty Name="person1" ColumnName="person1" />
                 <ScalarProperty Name="person2" ColumnName="person2" />
-                <ScalarProperty Name="groupID" ColumnName="groupID" />
                 <ScalarProperty Name="relationship" ColumnName="relationship" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -287,6 +347,7 @@
                 <ScalarProperty Name="group_ID" ColumnName="group_ID" />
                 <ScalarProperty Name="group_Name" ColumnName="group_Name" />
                 <ScalarProperty Name="persons" ColumnName="persons" />
+                <ScalarProperty Name="annotion_detail_ID" ColumnName="annotion_detail_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -309,6 +370,20 @@
               <MappingFragment StoreEntitySet="Videos">
                 <ScalarProperty Name="video_ID" ColumnName="video_ID" />
                 <ScalarProperty Name="video_Name" ColumnName="video_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="videos_dump">
+            <EntityTypeMapping TypeName="AnnotationDBModel.videos_dump">
+              <MappingFragment StoreEntitySet="videos_dump">
+                <ScalarProperty Name="frame_ID" ColumnName="frame_ID" />
+                <ScalarProperty Name="video_name" ColumnName="video_name" />
+                <ScalarProperty Name="frame_Vid_ID" ColumnName="frame_Vid_ID" />
+                <ScalarProperty Name="track_ID" ColumnName="track_ID" />
+                <ScalarProperty Name="x" ColumnName="x" />
+                <ScalarProperty Name="y" ColumnName="y" />
+                <ScalarProperty Name="width" ColumnName="width" />
+                <ScalarProperty Name="height" ColumnName="height" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

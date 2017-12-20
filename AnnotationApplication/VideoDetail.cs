@@ -14,7 +14,7 @@ namespace AnnotationApplication
     
     public partial class VideoDetail
     {
-        public int frame_ID { get; set; }
+        public long frame_ID { get; set; }
         public Nullable<int> video_ID { get; set; }
         public Nullable<int> frame_Vid_ID { get; set; }
         public Nullable<int> track_ID { get; set; }

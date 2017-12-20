@@ -17,12 +17,15 @@ namespace AnnotationApplication
         public Group()
         {
             this.AnnotationDetails = new HashSet<AnnotationDetail>();
+            this.AnnotationDetails1 = new HashSet<AnnotationDetail>();
         }
     
         public int group_ID { get; set; }
         public string group_Name { get; set; }
         public string persons { get; set; }
+        public Nullable<int> annotion_detail_ID { get; set; }
     
         public virtual ICollection<AnnotationDetail> AnnotationDetails { get; set; }
+        public virtual ICollection<AnnotationDetail> AnnotationDetails1 { get; set; }
     }
 }
