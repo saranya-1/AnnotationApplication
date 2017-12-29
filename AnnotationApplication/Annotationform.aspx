@@ -1,7 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Annotationform.aspx.cs" Inherits="AnnotationApplication.Annotationform" %>
 
 <!DOCTYPE html>
-
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
@@ -14,8 +13,8 @@
         .auto-style13 {
             width: 1575px;
             height: 137px;
-            margin-left: 200px;
-            margin-right: 200px
+            /*margin-left: 200px;
+            margin-right: 200px*/
         }
         .auto-style15 {
             width: 674px;
@@ -39,7 +38,7 @@
         }
        
         .auto-style22 {
-            width: 798px;
+            width: 798px;/*798*/
             height: 137px;
         }
        
@@ -56,7 +55,7 @@
         <br />
             <br />
             <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true"></asp:ScriptManager>
-                        < <div id="video_container">
+                        &nbsp;<div id="video_container">
                         <video style="display:block; margin: 0 auto;" controls="controls" id="video">
                             <source src="<%=videoNameUrl %>" type="video/mp4"/>
                         </video>
@@ -64,7 +63,7 @@
                     <div id="status" ></div>
                         <asp:HiddenField ID="curTimeHiddenField" runat="server" OnValueChanged="curTimeHiddenField_ValueChanged" />
                         <br />
-                    </div>   
+                      
             
         
       
@@ -74,8 +73,7 @@
             <asp:HiddenField ID="totalLengthVideo" runat="server" />
             <asp:HiddenField ID="videoNameHiddenField" runat="server" />
             <br />
-       
-        <table  id="relationshipTable" runat="server" align="center" class="auto-style13">
+               <table  id="relationshipTable" runat="server" align="center" class="auto-style13">
             <tr >
                 <td valign="top" class="auto-style22" style="border: 1px solid black" >
                     <%--<strong>--%>
@@ -240,8 +238,8 @@
             </td>
             </tr>
             </table>
+            </div>
             <br />
-             </div>
             <div style="text-align:center">
                 <asp:Button ID="btnAdd" runat="server" Text="Add" Width="184px" OnClick="btnAdd_Click" Font-Size="Large" ForeColor="Brown" CssClass="auto-style12" />
                </div>
@@ -267,6 +265,7 @@
             <div style="text-align:center">  
         <asp:Button ID="btnSubmit" runat="server" Text="Submit" OnClick="btnSubmit_Click" Width="159px" ForeColor="Brown"  Font-Size="Large" />&nbsp;&nbsp; <asp:Button ID="Button5" runat="server" Text="Remove" OnClick="Button5_Click" Width="144px" ForeColor="Brown"  Font-Size="Large" />
      </div>
+        </div> 
                 <script>
             var vLength;
           //  button helper functions 
@@ -340,7 +339,8 @@
                   // alert("Target control is :" + tar);
                })
 
-
+               $('#body').css('min-height', '100%');
+               $('#body').css('min-width', '100%');
                $(document).ready(function () {
                    $('video').click(function (e) {
                        if (e.ctrlKey) {
@@ -393,7 +393,7 @@
                    window.onpageshow = function (evt) { if (evt.persisted) disableBack() }
                });
            </script>  
-            
+         
     </form>
 
     

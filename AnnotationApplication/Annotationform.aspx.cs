@@ -32,9 +32,10 @@ namespace AnnotationApplication
                 Session["frameRate"] = framerate;
                 //to load the video using samping algorithm
                 AnnotationDBEntities entity = new AnnotationDBEntities();
-                // to check how many annotations have been completed for a video
+                // to check how many annotations have been completed for a video and then storing in a class
                 List<VideoClass> videoNamesList = entity.Annotations.GroupBy(x => x.Video.video_Name).Select(n => new VideoClass { Video_Name = n.Key, Count = n.Count() }).ToList();
                 List<String> videosAnnotationList = new List<String>();
+                //checking videos which have been annoated less than 5 times
                 foreach (VideoClass vc in videoNamesList)
                 {
                     if (vc.Count < 5)
@@ -42,25 +43,31 @@ namespace AnnotationApplication
                         videosAnnotationList.Add(vc.Video_Name);
                     }
                 }
+                //retieving the video names list which has less than 5 annotations
                 List<String> videoNames = entity.Videos.Where(c => !entity.Annotations.Select(b => b.video_ID).Contains(c.video_ID)).Select(x => x.video_Name).ToList();
                 foreach (String s in videosAnnotationList)
                 {
                     videoNames.Add(s);
                 }
+                //generating a random number to choose a video 
                 Random rand = new Random();
                 int i = rand.Next(0, videoNames.Count);
                 videoNameUrl = "Videos/" + videoNames.ElementAt(i).ToString() + ".mp4";
                 string videoName = videoNames.ElementAt(i).ToString();
+                // storing the video name and videoname url in session
                 Session["videoURL"] = videoNameUrl;
                 Session["videoName"] = videoName;
                 videoNameHiddenField.Value = videoName;
             }
             else
             {
+                //loads the page with video from the time at which it was paused
                 ScriptManager.RegisterStartupScript(this, typeof(Page), "UpdateMsg", "startvideofrom();", true);
                 videoNameUrl =(String) Session["videoURL"];
             }
         }
+
+        // To retrieve the person details when Ctrl click event triggered to add a member to a group
         [WebMethod]
         public static String getPersonDetails(String wi, String he, String curTime,String totalLength,String videoName)
         {
@@ -69,13 +76,13 @@ namespace AnnotationApplication
             int totallength = Convert.ToInt32(Convert.ToDouble(totalLength));
             String currenttime = curTime;
             AnnotationDBEntities entities = new AnnotationDBEntities();
+            // calculating the frame rate
             var frame = entities.VideoDetails.Where(v => v.Video.video_Name.Contains(videoName)).Select(v => v.frame_Vid_ID).Distinct().Count();
             int totTime = (int)Convert.ToDouble(totallength);
-
             int frameRate = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(frame) / totTime));
-
+            // calcuating the  frame number
             int frameNo = Convert.ToInt32(frameRate * Convert.ToDouble(currenttime));
-
+            // adjusting  original video co ordinates to the video in the front end
             String videoFullPath = "C:\\Users\\13067_000\\Source\\Repos\\AnnotationApplication\\AnnotationApplication\\Videos\\" + videoName+".mp4";
             ShellFile shellFile = ShellFile.FromFilePath(videoFullPath);
             int videoWidth = (int)shellFile.Properties.System.Video.FrameWidth.Value;
@@ -84,57 +91,48 @@ namespace AnnotationApplication
             int y = Convert.ToInt32(Convert.ToDouble(he));
             double x1 = (x / 680.0) * videoWidth;
             double y1 = (y / 460.0) * videoHeight;
+            //retrieving the person for that particular frame number and video name
             try
             {
                 var boxes = entities.VideoDetails.Where(v => v.Video.video_Name.Contains(videoName) && v.frame_Vid_ID == frameNo
                 && (v.x <= x1 && (v.x + v.width) >= x1) && (v.y <= y1 && (v.y + v.height) >= y1)).Select(v => v.track_ID).Distinct().Cast<String>().First();
-
                 result = "Person " + boxes.ToString();
             }
             catch (Exception ex)
             {
                 result = "";
             }
-
-
             return result;
         }
 
-
+        // to load the persons in the drop downs when pause button is clicked
         protected void curTimeHiddenField_ValueChanged(object sender, EventArgs e)
         {
             String videoName = (String)Session["videoName"];
-
             int totallength = Convert.ToInt32(Convert.ToDouble(totalLengthVideo.Value));
             String currenttime = curTimeHiddenField.Value;
-
             AnnotationDBEntities entities = new AnnotationDBEntities();
-
+            // calculating the frame rate
             var frame = entities.VideoDetails.Where(v => v.Video.video_Name.Contains(videoName)).Select(v => v.frame_Vid_ID).Distinct().Count();
-
             int totTime = (int)Convert.ToDouble(totallength);
-
             int frameRate = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(frame) / totTime));
-
+            //Storing the frame rate in session
             Session["frameRate"] = frameRate;
-
             int frameNo = Convert.ToInt32(frameRate * Convert.ToDouble(currenttime));
-
+            //retrieving the box numbers from db for frmae no and video name
             var boxes = entities.VideoDetails.Where(v => v.Video.video_Name.Contains(videoName) && v.frame_Vid_ID == frameNo).Select(v => v.track_ID).Distinct().Cast<String>().ToList();
-
             List<String> boxValues = boxes;
-
             var boxList = boxValues.Select(x => "Person " + x).ToList();
+            // populating person values in the dropdowns
             boxList.Insert(0, "Please Select");
             boxList.Insert(1, "Create Group");
             dropDownBox1.DataSource = boxList;
             dropDownBox1.DataBind();
-
             dropDownBox2.DataSource = boxList;
             dropDownBox2.DataBind();
-
         }
 
+        // When DropdownBox1 is clicked
         protected void dropDownBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             Dictionary<String, List<String>> groupMap = (Dictionary<String, List<String>>)Session["groupMap"];
@@ -144,10 +142,12 @@ namespace AnnotationApplication
             dropDownBox2.DataSource = items;
             dropDownBox2.DataBind();
             dropDownBox2.Items.Remove(box1SelectedValue);
+            //displays empty group panel if create group option is selected
             if (box1SelectedValue == "Create Group")
             {
                 createGroupPanel.Visible = true;
             }
+            // displays group panel with items selected if selected value is a group name 
             else if (groupMap.ContainsKey(box1SelectedValue))
             {
                 createGroupPanel.Visible = true;
@@ -178,67 +178,13 @@ namespace AnnotationApplication
 
         protected void btnAdd_Click(object sender, EventArgs e)
         {
+            //reteiving the selected values from the check box
             String selectedValue = "";
-            foreach (ListItem lst in CheckBoxList1.Items)
-            {
-                if (lst.Selected == true)
-                {
-                    if (lst.Value == "M")
-                    {
-                        selectedValue = selectedValue + lst.Value + "-";
-                    }
-                    else
-                    {
-                        selectedValue += lst.Value + ",\n";
-                    }
-                }
-
-            }
-            foreach (ListItem lst in CheckBoxList2.Items)
-            {
-                if (lst.Selected == true)
-                {
-                    if (lst.Value == "M")
-                    {
-                        selectedValue = selectedValue + lst.Value + "-";
-                    }
-                    else
-                    {
-                        selectedValue += lst.Value + ",\n";
-                    }
-                }
-
-            }
-            foreach (ListItem lst in CheckBoxList3.Items)
-            {
-                if (lst.Selected == true)
-                {
-                    if (lst.Value == "M")
-                    {
-                        selectedValue = selectedValue + lst.Value + "-";
-                    }
-                    else
-                    {
-                        selectedValue += lst.Value + ",\n";
-                    }
-                }
-
-            }
-            foreach (ListItem lst in CheckBoxList4.Items)
-            {
-                if (lst.Selected == true)
-                {
-                    if (lst.Value == "M")
-                    {
-                        selectedValue = selectedValue + lst.Value + "-";
-                    }
-                    else
-                    {
-                        selectedValue += lst.Value + ",\n";
-                    }
-                }
-
-            }
+            selectedValue += checkBoxSelection(CheckBoxList1);
+            selectedValue += checkBoxSelection(CheckBoxList2);
+            selectedValue += checkBoxSelection(CheckBoxList3);
+            selectedValue += checkBoxSelection(CheckBoxList4);
+            // reteieving the values from drop down
             AnnotationDBEntities entities = new AnnotationDBEntities();
             String value1 = dropDownBox1.SelectedValue; //TextBox1.Text;
             String value2 = dropDownBox2.SelectedValue; //TextBox2.Text;
@@ -247,18 +193,7 @@ namespace AnnotationApplication
             relation.frame_vid_ID = Convert.ToInt32(Convert.ToDouble(curTimeHiddenField.Value)) * framerate;
             //##############3to remove the below part
             Dictionary<String, List<String>> groupMap = (Dictionary<String, List<String>>)Session["groupMap"];
-            if (!groupMap.ContainsKey(value1)) {
-                List<String> persons = new List<String>();
-                persons.Add(value1);
-                groupMap.Add(value1,persons);
-            }
-            if (!groupMap.ContainsKey(value2))
-            {
-                List<String> persons = new List<String>();
-                persons.Add(value2);
-                groupMap.Add(value2, persons);
-            }
-            Session["groupMap"] = groupMap;
+            //Session["groupMap"] = groupMap;
             String vname= (String)Session["videoName"];
             List<AnnotationDetail> relationLists = (List<AnnotationDetail>)Session["relationList"];
             List<Group> groupsList = new List<Group>();
@@ -339,7 +274,7 @@ namespace AnnotationApplication
             GridView1.DataBind();
             clearAllControls();
         }
-
+        // submit button click event 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
             AnnotationDBEntities entities = new AnnotationDBEntities();
@@ -595,7 +530,7 @@ namespace AnnotationApplication
                 String value = "Person " + boxes.ToString();
                 if (s1[2].Equals("undefined"))
                 {
-                    ScriptManager.RegisterStartupScript(this, typeof(Page), "ShowAlert", "alert('Please select the Person 1 or Person 2 Text Box');", true);
+                    ScriptManager.RegisterStartupScript(this, typeof(Page), "ShowAlert", "alert('Please select the Person 1 or Person 2 dropdown');", true);
                 }
                 else
                 {
@@ -659,7 +594,26 @@ namespace AnnotationApplication
 
         }
 
+        protected String  checkBoxSelection(CheckBoxList checkBox)
+        {
+            String result = "";
+            foreach (ListItem lst in checkBox.Items)
+            {
+                if (lst.Selected == true)
+                {
+                    if (lst.Value == "M")
+                    {
+                        result = result + lst.Value + "-";
+                    }
+                    else
+                    {
+                        result += lst.Value + ",\n";
+                    }
+                }
 
+            }
+            return result;
+        }
         protected void Addmembers_Click(object sender, EventArgs e)
         {
             String grpName = txtGroupName.Text;

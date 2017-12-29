@@ -123,7 +123,6 @@
       <DependentUpon>AnnotationEntities.edmx</DependentUpon>
       <LastGenOutput>AnnotationEntities.cs</LastGenOutput>
     </Content>
-    <Content Include="Audio\Joannas Wedding Toast %28online-audio-converter.com%29.mp3" />
     <Content Include="example.aspx" />
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config">
@@ -194,6 +193,7 @@
     <Content Include="Videos\vid_036.mp4" />
     <Content Include="Videos\vid_037.mp4" />
     <Content Include="Videos\vid_038.mp4" />
+    <Content Include="Videos\vid_039.mp4" />
     <Content Include="Videos\vid_040.mp4" />
     <Content Include="Videos\vid_041.mp4" />
     <Content Include="Videos\vid_042.mp4" />
@@ -205,6 +205,16 @@
     <Content Include="Videos\vid_048.mp4" />
     <Content Include="Videos\vid_049.mp4" />
     <Content Include="Videos\vid_050.mp4" />
+    <Content Include="Videos\vid_051.mp4" />
+    <Content Include="Videos\vid_052.mp4" />
+    <Content Include="Videos\vid_053.mp4" />
+    <Content Include="Videos\vid_054.mp4" />
+    <Content Include="Videos\vid_055.mp4" />
+    <Content Include="Videos\vid_056.mp4" />
+    <Content Include="Videos\vid_057.mp4" />
+    <Content Include="Videos\vid_058.mp4" />
+    <Content Include="Videos\vid_059.mp4" />
+    <Content Include="Videos\vid_060.mp4" />
     <Content Include="Videos\vid_061.mp4" />
     <Content Include="Videos\vid_062.mp4" />
     <Content Include="Videos\vid_063.mp4" />
