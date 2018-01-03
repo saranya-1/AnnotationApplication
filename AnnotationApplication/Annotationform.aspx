@@ -143,8 +143,7 @@
                                 </div>
                        </asp:Panel>
                    </asp:Panel>
-                    <%--</strong> --%>                 
-                    <%--<asp:DropDownList ID="dropDownBox2" runat="server" OnSelectedIndexChanged="dropDownBox2_SelectedIndexChanged">
+                    <%--</strong> --%>                    <%--<asp:DropDownList ID="dropDownBox2" runat="server" OnSelectedIndexChanged="dropDownBox2_SelectedIndexChanged">
                          <asp:ListItem>Please select</asp:ListItem>
                     </asp:DropDownList>--%>
                     <asp:HiddenField ID="HiddenField1" runat="server" OnValueChanged="HiddenField1_ValueChanged" />
@@ -164,7 +163,7 @@
                   <asp:CheckBoxList ID="CheckBoxList1" runat="server" RepeatDirection="Horizontal" 
                    RepeatColumns="2" RepeatLayout="Table" TextAlign="Right" Width="285px" float="left" 
                    CellSpacing="1" white-space="nowrap" height="12px" overflow="hidden" margin=0 padding=0 
-                   BorderColor="SeaGreen" BorderWidth="2" OnSelectedIndexChanged="CheckBoxList1_SelectedIndexChanged">
+                   BorderColor="SeaGreen" BorderWidth="2">
                    <asp:ListItem>M</asp:ListItem>
                    <asp:ListItem>Mother-Child</asp:ListItem>
                    <asp:ListItem>M</asp:ListItem>
@@ -181,7 +180,7 @@
                    </asp:CheckBoxList>                 
                
 &nbsp;<br />
-                    <%--<div style="float:left; width:auto;display:inline-block">--%>
+                   <%--<div style="float:left; width:auto;display:inline-block">--%>
                     <asp:Label  ID="Label4" runat="server" Font-Bold="true" ForeColor="PaleVioletRed" Text="Partner">
                     </asp:Label>
                &nbsp;<asp:CheckBoxList ID="CheckBoxList4" runat="server" RepeatDirection="Horizontal" 
@@ -197,7 +196,7 @@
                   
                    
                &nbsp;
-            <%--</td>
+                   <%--</td>
             <td valign="top" style="border: 1px solid black">
                 <div style="width:750px;overflow:hidden; height:auto; float:left; text-align:justify; margin-bottom:15px;border:1px solid #000">--%>
                 <div style="width:auto; float:left; margin:0 12px 12px 0">
@@ -263,7 +262,7 @@
             <br /> 
             <br />  
             <div style="text-align:center">  
-        <asp:Button ID="btnSubmit" runat="server" Text="Submit" OnClick="btnSubmit_Click" Width="159px" ForeColor="Brown"  Font-Size="Large" />&nbsp;&nbsp; <asp:Button ID="Button5" runat="server" Text="Remove" OnClick="Button5_Click" Width="144px" ForeColor="Brown"  Font-Size="Large" />
+        <asp:Button ID="btnSubmit" runat="server" Text="Submit" OnClick="btnSubmit_Click" Width="159px" ForeColor="Brown"  Font-Size="Large" />&nbsp;&nbsp; <asp:Button ID="BtnRemove" runat="server" Text="Remove" OnClick="BtnRemove_Click" Width="144px" ForeColor="Brown"  Font-Size="Large" />
      </div>
         </div> 
                 <script>
@@ -356,12 +355,7 @@
                                if (result == "") {
                                    alert("please click within the box");
                                } else {
-                                   var hidvalue = document.getElementById("grpMemHiddenField").value;
-                                   //var listbox = document.getElementById("ListBox1");
-                                   //var newOption = window.document.createElement('OPTION');
-                                   //newOption.text = result;
-                                   //newOption.value = result;
-                                   //listbox.options.add(newOption);                                  
+                                   var hidvalue = document.getElementById("grpMemHiddenField").value;                            
                                    hidvalue =result;
                                    document.getElementById("grpMemHiddenField").value = hidvalue;
                                    __doPostBack(document.getElementById('grpMemHiddenField').name, '')

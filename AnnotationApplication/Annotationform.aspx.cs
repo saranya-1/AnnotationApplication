@@ -76,15 +76,16 @@ namespace AnnotationApplication
             int totallength = Convert.ToInt32(Convert.ToDouble(totalLength));
             String currenttime = curTime;
             AnnotationDBEntities entities = new AnnotationDBEntities();
+            String videoFullPath = "C:\\Users\\13067_000\\Source\\Repos\\AnnotationApplication\\AnnotationApplication\\Videos\\" + videoName+".mp4";
+            ShellFile shellFile = ShellFile.FromFilePath(videoFullPath);
             // calculating the frame rate
-            var frame = entities.VideoDetails.Where(v => v.Video.video_Name.Contains(videoName)).Select(v => v.frame_Vid_ID).Distinct().Count();
-            int totTime = (int)Convert.ToDouble(totallength);
-            int frameRate = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(frame) / totTime));
+            //var frame = entities.VideoDetails.Where(v => v.Video.video_Name.Contains(videoName)).Select(v => v.frame_Vid_ID).Distinct().Count();
+            //int totTime = (int)Convert.ToDouble(totallength);
+            //int frameRate = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(frame) / totTime));
+            int frameRate = (int)shellFile.Properties.System.Video.FrameRate.Value / 1000;
             // calcuating the  frame number
             int frameNo = Convert.ToInt32(frameRate * Convert.ToDouble(currenttime));
             // adjusting  original video co ordinates to the video in the front end
-            String videoFullPath = "C:\\Users\\13067_000\\Source\\Repos\\AnnotationApplication\\AnnotationApplication\\Videos\\" + videoName+".mp4";
-            ShellFile shellFile = ShellFile.FromFilePath(videoFullPath);
             int videoWidth = (int)shellFile.Properties.System.Video.FrameWidth.Value;
             int videoHeight = (int)shellFile.Properties.System.Video.FrameHeight.Value;
             int x = Convert.ToInt32(Convert.ToDouble(wi));
@@ -115,7 +116,10 @@ namespace AnnotationApplication
             // calculating the frame rate
             var frame = entities.VideoDetails.Where(v => v.Video.video_Name.Contains(videoName)).Select(v => v.frame_Vid_ID).Distinct().Count();
             int totTime = (int)Convert.ToDouble(totallength);
-            int frameRate = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(frame) / totTime));
+            String videoFullPath = "C:\\Users\\13067_000\\Source\\Repos\\AnnotationApplication\\AnnotationApplication\\Videos\\" + videoName + ".mp4";
+            ShellFile shellFile = ShellFile.FromFilePath(videoFullPath);
+            int frameRate= (int)shellFile.Properties.System.Video.FrameRate.Value/1000;
+          //  int frameRate = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(frame) / totTime));
             //Storing the frame rate in session
             Session["frameRate"] = frameRate;
             int frameNo = Convert.ToInt32(frameRate * Convert.ToDouble(currenttime));
@@ -161,8 +165,6 @@ namespace AnnotationApplication
                         ListItem listItem = new ListItem();
                         listItem.Value = li;
                         groupElements.Add(listItem);
-
-
                     }
                 }
                 ListBox1.DataSource = persons;
@@ -175,7 +177,8 @@ namespace AnnotationApplication
                 createGroupPanel.Visible = false;
             }
         }
-
+    
+        // Add Button Event Action
         protected void btnAdd_Click(object sender, EventArgs e)
         {
             //reteiving the selected values from the check box
@@ -186,15 +189,14 @@ namespace AnnotationApplication
             selectedValue += checkBoxSelection(CheckBoxList4);
             // reteieving the values from drop down
             AnnotationDBEntities entities = new AnnotationDBEntities();
-            String value1 = dropDownBox1.SelectedValue; //TextBox1.Text;
-            String value2 = dropDownBox2.SelectedValue; //TextBox2.Text;
+            String value1 = dropDownBox1.SelectedValue;
+            String value2 = dropDownBox2.SelectedValue; 
             AnnotationDetail relation = new AnnotationDetail();
             int framerate = Convert.ToInt32(Session["frameRate"]);
             relation.frame_vid_ID = Convert.ToInt32(Convert.ToDouble(curTimeHiddenField.Value)) * framerate;
-            //##############3to remove the below part
             Dictionary<String, List<String>> groupMap = (Dictionary<String, List<String>>)Session["groupMap"];
-            //Session["groupMap"] = groupMap;
             String vname= (String)Session["videoName"];
+            //reteieving the realtions added earlier
             List<AnnotationDetail> relationLists = (List<AnnotationDetail>)Session["relationList"];
             List<Group> groupsList = new List<Group>();
             Dictionary<String, Group> groupObjectmap = (Dictionary<String, Group>)Session["groupObjectMap"];
@@ -202,10 +204,12 @@ namespace AnnotationApplication
             {
                 groupsList.Add((Group)groupObjectmap.Where(x => x.Key == s).Select(x => x.Value).First());
             }
+            //Internally storing a single person as group in Db
             Group group1 =null;
             Group group2=null;
             Boolean isPresent1 = false;
             Boolean isPresent2 = false;
+            //for dropdown1(Person 1)
             foreach(Group g in groupsList)
             {
                 if (g.group_Name == value1)
@@ -231,6 +235,7 @@ namespace AnnotationApplication
                 }
                 groupObjectmap.Add(value1, group1);
             }
+            //for dropdown2 (Person 2)
             foreach (Group g in groupsList)
             {
                 if (g.group_Name == value2)
@@ -263,10 +268,12 @@ namespace AnnotationApplication
             relation.Group = group1;
             relation.Group1 = group2;
             relation.relationship = selectedValue;
-            if (selectedValue.Equals(""))
-            {
-
-            }
+            ////checking if whether relationsip is added
+            //if (selectedValue.Equals(""))
+            //{
+            //    ScriptManager.RegisterStartupScript(this, GetType(), "ShowAlert", "alert('Please select relationship');", true);
+            //}
+            //
             List<AnnotationDetail> relList = (List<AnnotationDetail>)Session["relationList"];
             relList.Add(relation);
             Session["relationList"] = relList;
@@ -274,15 +281,19 @@ namespace AnnotationApplication
             GridView1.DataBind();
             clearAllControls();
         }
+
         // submit button click event 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
             AnnotationDBEntities entities = new AnnotationDBEntities();
             //to add relation to annotation detail and annotation tables.
             Annotation annotation = new Annotation();
-            annotation.video_ID = 1;
+            String videoName = (String)Session["videoName"];
+            int id =entities.Videos.Where(x => x.video_Name == videoName).Select(x => x.video_ID).First();
+            annotation.video_ID =id ;
             entities.Annotations.Add(annotation);
             entities.SaveChanges();
+            //storing the values in relation
             List<AnnotationDetail> relList = (List<AnnotationDetail>)Session["relationList"];
             foreach (AnnotationDetail relation in relList)
             {
@@ -294,25 +305,7 @@ namespace AnnotationApplication
             Session.Clear();
         }
 
-
-        protected void AddGroupToDB(String groupName)
-        {
-            AnnotationDBEntities entities = new AnnotationDBEntities();
-            Dictionary<String, List<String>> groupMap = (Dictionary<String, List<String>>)Session["groupMap"];
-            String members = "";
-            List<String> persons = groupMap.Where(x => x.Key == groupName).Select(x => x.Value).First();
-            foreach (String p in persons)
-            {
-                members = members + p + ",";
-            }
-            // to add todb
-            Group group = new Group();
-            group.group_Name = groupName;
-            group.persons = members;
-            entities.Groups.Add(group);
-            entities.SaveChanges();
-        }
-
+        // Add group click event 
         protected void btnAddGroup_Click(object sender, EventArgs e)
         {
             String groupName = txtGroupName.Text;
@@ -345,11 +338,7 @@ namespace AnnotationApplication
                     //removing items from dropdown
                     createGroupPanel.Visible = false;
                 }
-                //if (groupDownDown.Items.Count == 0)
-                //    groupDownDown.Items.Add("Please Select");
-
-                //groupDownDown.Items.Add(groupName);
-
+                //resetting values
                 txtGroupName.Text = "";
                 grpMemHiddenField.Value = "";
 
@@ -359,8 +348,6 @@ namespace AnnotationApplication
             {
                 dropDownBox1.Items.Remove(li);
             }
-            //dropDownBox1.Items.Add(groupName);
-            //dropDownBox2.Items.Add(groupName);
             foreach (String li in members)
             {
                 dropDownBox2.Items.Remove(li);
@@ -369,7 +356,7 @@ namespace AnnotationApplication
 
         }
 
-        protected void Button5_Click(object sender, EventArgs e)
+        protected void BtnRemove_Click(object sender, EventArgs e)
         {
             for (int i = 0; i < GridView1.Rows.Count; i++)
             {
@@ -387,6 +374,7 @@ namespace AnnotationApplication
             GridView1.DataBind();
         }
 
+        //clear all the controls
         private void clearAllControls()
         {
             foreach (ListItem lst in CheckBoxList1.Items)
@@ -405,20 +393,16 @@ namespace AnnotationApplication
             {
                 lst.Selected = false;
             }
-            //TextBox1.Text = "";
-            //TextBox2.Text = "";
             dropDownBox1.SelectedIndex = 0;
             dropDownBox2.SelectedIndex = 0;
         }
 
+        //drop down 2 click event
         protected void dropDownBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
             String box2SelectedValue = dropDownBox2.SelectedValue;
             Dictionary<String, List<String>> groupMap = (Dictionary<String, List<String>>)Session["groupMap"];
             ListItemCollection items = new ListItemCollection();
-            //items = dropDownBox1.Items;
-            //dropDownBox1.DataSource = items;
-            //dropDownBox1.DataBind();
             dropDownBox1.Items.Remove(box2SelectedValue);
             if (box2SelectedValue == "Create Group")
             {
@@ -453,24 +437,19 @@ namespace AnnotationApplication
             
         }
 
+        // remove group button click event
         protected void btnRemoveGroup_Click(object sender, EventArgs e)
         {
             if (txtGroupName.Text != null || txtGroupName.Text == "")
             {
                 String grpName = txtGroupName.Text;
-                //    AnnotationEntities entity = new AnnotationEntities();
-                //    groupDetail gd = entity.groupDetails.Where(x => x.GroupName == grpName).Select(x => x).First();
-                //    entity.groupDetails.Remove(gd);
-                //    entity.SaveChanges();
-                //    String members = gd.Person;
-                //    List<String> persons = members.Split(',').ToList();
                 Dictionary<String, List<String>> groupMap = (Dictionary<String, List<String>>)Session["groupMap"];
                 if (groupMap.ContainsKey(grpName))
                 {
                     List<String> persons = groupMap.Where(x => x.Key == grpName).Select(x => x.Value).First();
                     groupMap.Remove(txtGroupName.Text);
                     Session["groupMap"] = groupMap;
-
+                    // group members are added
                     foreach (String s in persons)
                     {
                         if (!s.Equals(""))
@@ -481,10 +460,8 @@ namespace AnnotationApplication
                     }
 
                     dropDownBox2.Items.Remove(grpName);
-                       dropDownBox1.Items.Remove(grpName);
-                    //groupDownDown.Items.Remove(grpName);
+                    dropDownBox1.Items.Remove(grpName);
                     txtGroupName.Text = "";
-                    // ListBox2.Items.Clear();
                 }
             }
             else
@@ -493,24 +470,19 @@ namespace AnnotationApplication
             }
         }
 
+        //Hidden value for current time changed
         protected void HiddenField1_ValueChanged(object sender, EventArgs e)
         {
             AnnotationDBEntities entities = new AnnotationDBEntities();
             String s = HiddenField1.Value;
             String[] s1 = s.Split(',');
-
             String videoName = (String)Session["videoName"];
-
+            //calculating framerate
             int totallength = Convert.ToInt32(Convert.ToDouble(totalLengthVideo.Value));
-            String currenttime=(String)curTimeHiddenField.Value;
-            
+            String currenttime=(String)curTimeHiddenField.Value;            
             var frame = entities.VideoDetails.Where(v => v.Video.video_Name.Contains(videoName)).Select(v => v.frame_Vid_ID).Distinct().Count();
-
-
             int totTime = (int)Convert.ToDouble(totallength);
-
             int frameRate = Convert.ToInt32(Session["frameRate"]);// Convert.ToInt32(frame) / totTime;
-
             int frameNo = Convert.ToInt32(frameRate * Convert.ToDouble(currenttime));
             String vname = (String)Session["VideoName"] + ".mp4";
             String videoFullPath = "C:\\Users\\13067_000\\Source\\Repos\\AnnotationApplication\\AnnotationApplication\\Videos\\"+ vname;
@@ -525,8 +497,6 @@ namespace AnnotationApplication
             {
                 var boxes = entities.VideoDetails.Where(v => v.Video.video_Name.Contains(videoName) && v.frame_Vid_ID == frameNo
            && (v.x <= x1 && (v.x + v.width) >= x1) && (v.y <= y1 && (v.y + v.height) >= y1)).Select(v => v.track_ID).Distinct().Cast<String>().First();
-
-
                 String value = "Person " + boxes.ToString();
                 if (s1[2].Equals("undefined"))
                 {
@@ -534,8 +504,6 @@ namespace AnnotationApplication
                 }
                 else
                 {
-                    //TextBox textbox = (TextBox)this.FindControl(s1[2]);
-                    //textbox.Text = value;
                     DropDownList dropdown = (DropDownList)this.FindControl(s1[2]);
                     int index = 0;
                     foreach (ListItem li in dropdown.Items)
@@ -548,7 +516,6 @@ namespace AnnotationApplication
                         index++;
                     }
                     dropdown.SelectedIndex = index;
-
                 }
             }
             catch (Exception ex)
@@ -556,6 +523,8 @@ namespace AnnotationApplication
                 ScriptManager.RegisterStartupScript(this, GetType(), "ShowAlert", "alert('Please click inside boundary boxes');", true);
             }
         }
+
+        //RemoveMember from group 
         protected void Removemember_Click(object sender, EventArgs e)
         {
             String grpName = txtGroupName.Text;
@@ -589,11 +558,8 @@ namespace AnnotationApplication
                 dropDownBox2.Items.Add(item);
             }
         }
-        protected void CheckBoxList1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
+       
+        // checkbox selection for relationships
         protected String  checkBoxSelection(CheckBoxList checkBox)
         {
             String result = "";
@@ -614,6 +580,7 @@ namespace AnnotationApplication
             }
             return result;
         }
+        //Add member click
         protected void Addmembers_Click(object sender, EventArgs e)
         {
             String grpName = txtGroupName.Text;
@@ -621,6 +588,7 @@ namespace AnnotationApplication
             String[] s1 = val.Split(',');
             Dictionary<String, List<String>> groupMap = (Dictionary<String, List<String>>)Session["groupMap"];
             List<String> persons = groupMap.Where(x => x.Key == grpName).Select(x => x.Value).First();
+            // retriving the existing person list and add person
             foreach (string s in s1)
             {
                 if (s != "")
@@ -632,8 +600,10 @@ namespace AnnotationApplication
             }
         }
 
+        //group member field change event
         protected void grpMemHiddenField_ValueChanged(object sender, EventArgs e)
         {
+            //group member to check person exists
             String value = grpMemHiddenField.Value;
             ListItemCollection items = ListBox1.Items;
             if (items.Contains(new ListItem(value)))
@@ -646,7 +616,7 @@ namespace AnnotationApplication
                 ListBox1.Items.Add(value);
                 grpMemHiddenField.Value = "";
             }
-        }
+        }       
     }
 }
 
